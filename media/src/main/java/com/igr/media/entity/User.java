@@ -1,5 +1,6 @@
 package com.igr.media.entity;
 
+import com.igr.media.dto.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "posts")
+@Table(name = "users")
 public class User {
     /** id пользователя     */
     @Id
@@ -33,6 +34,12 @@ public class User {
     String password;
 
     /**     * друзья пользователя     */
-    @Column(name = "password")
-    Collection<String> friend;
+    @ElementCollection
+    @CollectionTable(name = "user_list_of_friends", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "list_of_friends")
+    Collection<Integer> friend;
+    /**     * роль пользователя     */
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
