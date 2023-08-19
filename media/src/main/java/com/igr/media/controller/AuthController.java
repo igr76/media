@@ -1,5 +1,7 @@
 package com.igr.media.controller;
 
+import com.igr.media.dto.LoginReq;
+import com.igr.media.dto.RegisterReq;
 import com.igr.media.security.UserDetailServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,10 +17,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.LoginReq;
-import ru.skypro.homework.dto.RegisterReq;
-import ru.skypro.homework.security.UserDetailServiceImpl;
-
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @Tag(name = "Авторизация")
