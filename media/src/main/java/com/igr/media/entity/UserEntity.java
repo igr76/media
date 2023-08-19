@@ -1,10 +1,13 @@
 package com.igr.media.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.igr.media.dto.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,7 +17,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
     /** id пользователя     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +35,29 @@ public class User {
     /**     * пароль пользователя     */
     @Column(name = "password")
     String password;
+    /**    Время последнего прочтения     */
+    @Column(name = "data")
+    private LocalDateTime data;
+    /**
+     * фото пользователя
+     */
+    @Column(name = "image")
+    String image;
 
     /**     * друзья пользователя     */
-    @ElementCollection
-    @CollectionTable(name = "user_list_of_friends", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "list_of_friends")
-    Collection<Integer> friend;
+    @ManyToMany
+    @JoinTable(name="users_friends",
+            joinColumns=  @JoinColumn(name="users_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="friends_id", referencedColumnName="id") )
+    private  Collection<Friends> friend;
+
     /**     * роль пользователя     */
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "userPost")
+    @JsonBackReference
+    @ToString.Exclude
+    List<Post> postUser;
 }

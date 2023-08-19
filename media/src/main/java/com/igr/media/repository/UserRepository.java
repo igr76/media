@@ -1,6 +1,5 @@
 package com.igr.media.repository;
-
-import com.igr.media.entity.User;
+import com.igr.media.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +9,10 @@ import java.util.Optional;
  * Репозиторий для пользователей
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 
-  Optional<User> findByEmail(String email);
+  Optional<UserEntity> findByEmail(String email);
 
 
 }
