@@ -3,10 +3,12 @@ package com.igr.media.service.impl;
 
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
+import com.igr.media.entity.Friends;
 import com.igr.media.entity.UserEntity;
 import com.igr.media.exception.ElemNotFound;
 import com.igr.media.loger.FormLogInfo;
 import com.igr.media.mapper.UserMapper;
+import com.igr.media.repository.FriendsRepository;
 import com.igr.media.repository.UserRepository;
 import com.igr.media.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -32,13 +36,15 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+  private final FriendsRepository friendsRepository;
 
   @Value("${image.user.dir.path}")
   private String userPhotoDir;
 
-  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, FriendsRepository friendsRepository) {
     this.userRepository = userRepository;
     this.userMapper = userMapper;
+    this.friendsRepository = friendsRepository;
   }
 
   /**
@@ -177,6 +183,44 @@ public class UserServiceImpl implements UserService {
   private UserEntity findEntityByEmail(String email) {
     log.info(FormLogInfo.getInfo());
     return userRepository.findByEmail(email).get();
+  }
+  /**
+   * найти пользователя по email - логину
+   *
+   * @param id email - логину пользователя
+   * @param message email - логину пользователя
+   * @return пользователь
+   */
+  private void messageOfFriend(int id,String message) {
+    UserEntity user = userRepository.findById(id).orElseThrow(ElemNotFound::new);
+    List<String> getMessage1 = user.getMessage();
+    getMessage1.add(message);
+    user.setMessage(getMessage1);
+  }
+  /**
+   * найти пользователя по email - логину
+   *
+   * @param user email - логину пользователя
+   * @param friend email - логину пользователя
+   * @return пользователь
+   */
+  private void goFriend(String user, Friends friend) {
+    messageOfFriend((userRepository.findByEmail(friend.getEmail()).orElseThrow(ElemNotFound::new))
+            .getId(),"Пользователь :" + user + "приглашает вас в друзья.");
+  }
+  /**
+   * найти пользователя по email - логину
+   *
+   * @param user email - логину пользователя
+   * @param friend email - логину пользователя
+   * @return пользователь
+   */
+  private void addFriend(int userId,String friend) {
+    UserEntity user = userRepository.findById(userId).orElseThrow(ElemNotFound::new);
+    Friends friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
+    Collection<Friends> friends1 = user.getFriend();
+    friends1.add(friends);
+    user.setFriend(friends1);
   }
 
 

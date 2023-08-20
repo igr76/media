@@ -13,7 +13,7 @@ import java.util.Collection;
  * Сервис объявлений
  */
 public interface PostService {
-    Collection<PostDto> getAllPosts();
+    Collection<PostDto> getAllPosts(Authentication authentication);
 
     /**
      * Возвращает объявление

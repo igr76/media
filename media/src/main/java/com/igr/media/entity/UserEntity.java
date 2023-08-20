@@ -56,6 +56,16 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ElementCollection
+    @CollectionTable(name = "user_subscriptions", joinColumns = @JoinColumn(name = "users_id"))
+    @Column(name = "subscriptions")
+    List<Integer> subscriptions;
+
+    @ElementCollection
+    @CollectionTable(name = "user_message", joinColumns = @JoinColumn(name = "users_id"))
+    @Column(name = "message")
+    List<String> message;
+
     @OneToMany(mappedBy = "userPost")
     @JsonBackReference
     @ToString.Exclude

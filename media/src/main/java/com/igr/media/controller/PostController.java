@@ -42,8 +42,8 @@ public class PostController {
             )
     })
     @GetMapping
-    public ResponseEntity<Collection<PostDto>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<Collection<PostDto>> getAllPosts(Authentication authentication) {
+        return ResponseEntity.ok(postService.getAllPosts( authentication));
     }
 
     @Operation(summary = "Получить объявление")

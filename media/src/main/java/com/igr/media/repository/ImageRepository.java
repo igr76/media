@@ -12,5 +12,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface ImageRepository extends JpaRepository<ImageEntity, Integer> {
-
 }
