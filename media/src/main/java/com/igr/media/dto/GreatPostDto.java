@@ -1,6 +1,5 @@
 package com.igr.media.dto;
 
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,16 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostDto {
-    /**    Идентификатор сообщения     */
-     int id;
+public class GreatPostDto {
     /**    Заголовок сообщения     */
-    String title;
+    public String title;
     /**    Содержание сообщения     */
-    String content;
+    private String content;
     /**    Дата сообщения     */
-     LocalDateTime data;
+    private LocalDateTime data;
     /**    автор сообщения     */
-     String name;
-     String image;
+    public String name;
 }

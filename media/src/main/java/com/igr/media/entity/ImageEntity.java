@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "post_images")
+@Table(name = "images")
 @Entity
 public class ImageEntity {
 
@@ -25,6 +25,6 @@ public class ImageEntity {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "post_id")
     Post post;
+
 }

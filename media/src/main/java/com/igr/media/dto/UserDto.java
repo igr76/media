@@ -2,8 +2,20 @@ package com.igr.media.dto;
 
 
 
-import java.util.Collection;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+import java.util.Collection;
+/**
+ * DTO сущности
+ */
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
     /** id пользователя     */
         Integer id;
@@ -16,5 +28,11 @@ public class UserDto {
 
     /**     * пароль пользователя     */
     String password;
+    /**
+     * фото пользователя
+     */
+
+    String image;
+
 
 }

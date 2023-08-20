@@ -4,5 +4,6 @@ CREATE TABLE users
     name TEXT,
     email TEXT,
     password TEXT,
+    data TIMESTAMP,
     role TEXT
 );
