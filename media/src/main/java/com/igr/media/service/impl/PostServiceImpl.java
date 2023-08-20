@@ -243,7 +243,7 @@ public class PostServiceImpl implements PostService {
     }
 
     /**
-     * Обновить объявление по id
+     * Обновить сообщениe по id
      *
      * @param id
      */
@@ -266,20 +266,25 @@ public class PostServiceImpl implements PostService {
         return Path.of(nameDir,
                 Objects.requireNonNull(String.valueOf(id)));
     }
-
+    /**
+     * Обновить дату последнего прочтения сообщениe
+     */
     private void changeDataTime(Authentication authentication) {
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
         user.setData(LocalDateTime.now());
     }
+    /**
+     * Получить список новых  сообщений по подпискам
+     */
     public Collection<PostDto> getAllPostsNew(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
         Collection<Post> postCollection = postRepository.findAllNew(user.getData());
-        postCollection.stream()
-                        .filter(e -> {
-                            for (int g: user.getSubscriptions()  ) {e.getAuthorId() == g  };})
-                                .collect(Collectors.toList());
-        changeDataTime(authentication);
+//        postCollection.stream()
+//                        .filter(e -> {
+//                            for (int g: user.getSubscriptions()  ) {e.getAuthorId() == g };})
+//                                .collect(Collectors.toList());
+//        changeDataTime(authentication);
         return postMapper.toDTOList(postCollection);
     }
 
