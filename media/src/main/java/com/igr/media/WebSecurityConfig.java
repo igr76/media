@@ -51,20 +51,20 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf().disable()
-        .authorizeHttpRequests((authz) ->
-        {
-          try {
-            authz
-                .mvcMatchers(AUTH_WHITELIST).permitAll()
-                .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
-                .mvcMatchers("/ads/**", "/users/**")
-                .authenticated();
-          } catch (Exception e) {
-            throw new RuntimeException(e);
-          }
-        })
-        .cors().and()
+//        .csrf().disable()
+//        .authorizeHttpRequests((authz) ->
+//        {
+//          try {
+//            authz
+//                    .requestMatchers(AUTH_WHITELIST).permitAll()
+//                .requestMatchers(HttpMethod.GET, "/ads").permitAll()
+//                .requestMatchers("/ads/**", "/users/**")
+//                .authenticated();
+//          } catch (Exception e) {
+//            throw new RuntimeException(e);
+//          }
+//        })
+//        .cors().and()
         .httpBasic(withDefaults());
     return http.build();
   }

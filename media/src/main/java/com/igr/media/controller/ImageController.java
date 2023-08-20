@@ -76,7 +76,7 @@ public class ImageController {
       )
   })
   @GetMapping(value = "{id}", produces = MediaType.IMAGE_PNG_VALUE)
-  public ResponseEntity<byte[]> getAdsImage(@PathVariable(value = "id") Integer id) {
+  public ResponseEntity<byte[]> getPhotoById(@PathVariable(value = "id") Integer id) {
     log.info(FormLogInfo.getInfo());
     return ResponseEntity.ok(postService.getPhotoById(id));
   }
