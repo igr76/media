@@ -46,7 +46,7 @@ public class PostController {
         return ResponseEntity.ok(postService.getAllPosts( authentication));
     }
 
-    @Operation(summary = "Получить объявление")
+    @Operation(summary = "Получить сообщение по номеру")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",

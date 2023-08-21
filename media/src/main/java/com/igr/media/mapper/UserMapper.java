@@ -12,10 +12,8 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     @Mapping(target = "data", ignore = true)
-    @Mapping(target = "friend", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "subscriptions", ignore = true)
-    @Mapping(target = "message", ignore = true)
     @Mapping(target = "postUser", ignore = true)
     UserEntity toEntity(UserDto userDto);
 
