@@ -1,10 +1,13 @@
 package com.igr.media.controller;
 
 import com.igr.media.dto.NewPassword;
+import com.igr.media.dto.PostDto;
 import com.igr.media.dto.UserDto;
+import com.igr.media.entity.Friends;
 import com.igr.media.loger.FormLogInfo;
 import com.igr.media.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -182,6 +186,128 @@ public class UserController {
     log.info(FormLogInfo.getInfo());
     return ResponseEntity.ok(userService.getPhotoById(id));
   }
+    @Operation(summary = "Получить пользователя")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content(schema = @Schema())
+            )
+    })
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<UserDto> findById(
+            @PathVariable(name = "id") @NonNull @Parameter(description = "Больше 0, Например 1") Integer id,
+            Authentication authentication) {
+        log.info(FormLogInfo.getInfo());
+        return ResponseEntity.ok(userService.findById(id,authentication));
+    }
+    @Operation(summary = "отправить сообщение другу")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = {
+                            @Content(
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found"
+            )
+    })
+    @PatchMapping("/message/{id}/{message}")
+    public void messageOfFriend(
+            @PathVariable(name = "id") @NonNull @Parameter(description = "Больше 0, Например 1") Integer id,
+            @PathVariable(name = "message") @NonNull String message) {
+      userService.messageOfFriend(id,message);
+
+    }
+    @Operation(summary = "добавить в друзья")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = {
+                            @Content(
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found"
+            )
+    })
+    @PatchMapping("/friend/{id}/{friend}")
+    public void addFriend(
+            @PathVariable(name = "id") @NonNull @Parameter(description = "Больше 0, Например 1") Integer id,
+            @PathVariable(name = "friend") @NonNull String friend) {
+        userService.addFriend(id,friend);
+
+    }
+    @Operation(summary = "Пригласить в друзья")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = {
+                            @Content(
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found"
+            )
+    })
+    @PatchMapping("/friend/{user}")
+    public void goFriend(
+            @PathVariable(name = "user") @NonNull  String user,
+            @RequestBody
+            @NotBlank(message = "updateUser не должен быть пустым") Friends friends) {
+        userService.goFriend(user,friends);
+
+    }
 
 
 

@@ -7,7 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+/**    Сущность сообщения     */
 @Getter
 @Setter
 @ToString

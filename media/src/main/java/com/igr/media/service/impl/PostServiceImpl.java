@@ -274,19 +274,26 @@ public class PostServiceImpl implements PostService {
         user.setData(LocalDateTime.now());
     }
     /**
-     * Получить список новых  сообщений по подпискам
+     * Получить  новыe  сообщения
      */
     public Collection<PostDto> getAllPostsNew(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
         Collection<Post> postCollection = postRepository.findAllNew(user.getData());
-//        postCollection.stream()
-//                        .filter(e -> {
-//                            for (int g: user.getSubscriptions()  ) {e.getAuthorId() == g };})
-//                                .collect(Collectors.toList());
-//        changeDataTime(authentication);
         return postMapper.toDTOList(postCollection);
     }
+    /**
+     * Получить список новых  сообщений по подпискам
+     */
+    public Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication) {
+        log.info(FormLogInfo.getInfo());
+        UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
+        Collection<Post> postCollection = postRepository.findAllNew(user.getData());
+        postCollection.forEach(e -> {user.getSubscriptions().stream()
+                .filter(g -> g == e.authorId);});
+        return postMapper.toDTOList(postCollection);
+    }
+
 
     private String getLinkToGetImage(Integer id) {
         return "/post" + "/" + id;

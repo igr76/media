@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-
+/**     * Сущность пользователя     */
 @Getter
 @Setter
 @ToString
@@ -59,15 +59,15 @@ public class UserEntity {
     @ElementCollection
     @CollectionTable(name = "user_subscriptions", joinColumns = @JoinColumn(name = "users_id"))
     @Column(name = "subscriptions")
-    List<Integer> subscriptions;
+    Collection<Integer> subscriptions;
 
     @ElementCollection
     @CollectionTable(name = "user_message", joinColumns = @JoinColumn(name = "users_id"))
     @Column(name = "message")
-    List<String> message;
+    Collection<String> message;
 
     @OneToMany(mappedBy = "userPost")
     @JsonBackReference
     @ToString.Exclude
-    List<Post> postUser;
+    Collection<Post> postUser;
 }

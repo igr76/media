@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/ads")
+@RequestMapping("/post")
 @Tag(name = "Изображение")
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -33,7 +33,7 @@ public class ImageController {
     }
 
 
-    @Operation(summary = "Загрузить картинку в объявление")
+    @Operation(summary = "Загрузить картинку в пост")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -56,7 +56,7 @@ public class ImageController {
         return ResponseEntity.ok().build();
     }
 
-  @Operation(summary = "Получить аватарку объявления")
+  @Operation(summary = "Получить аватарку поста")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",

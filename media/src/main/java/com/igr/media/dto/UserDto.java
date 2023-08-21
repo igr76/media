@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
 /**
- * DTO сущности
+ * DTO пользователя
  */
 @Getter
 @Setter

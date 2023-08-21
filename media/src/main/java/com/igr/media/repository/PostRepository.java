@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-
+/**
+ * Репозиторий для Поста
+ */
 public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query(nativeQuery = true, value = "SELECT MAX(ID) FROM posts")
     int findMaxID();
