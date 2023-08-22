@@ -25,7 +25,7 @@ public class PostDto {
     /**    Дата сообщения     */
      LocalDateTime data;
     /**    автор сообщения     */
-     String name;
+     Integer authorId;
     /**    изображение сообщения     */
      String image;
 }

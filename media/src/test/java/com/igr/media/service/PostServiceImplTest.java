@@ -30,31 +30,34 @@ public class PostServiceImplTest {
     PostRepository postRepository;
     @Mock
     PostMapper postMapper;
+    int ONE =1;
 @Test
     void getAllPostsTest() {
     List<Post> postCollection = new ArrayList<>();
     postCollection.add(getPost());
+    List<PostDto> postDtoList = new ArrayList<>();
+    postDtoList.add(getPostDto());
     when(postRepository.findAll()).thenReturn(postCollection);
-    when(postMapper.toDTOList(any())).thenReturn(autoDtoList);
-    assertThat(postService()).isEqualTo(autoDtoList);
+    when(postMapper.toDTOList(any())).thenReturn(postDtoList);
+    assertThat(postService.getAllPosts(any())).isEqualTo(postDtoList);
     verify(postRepository,times(ONE)).findAll();
     }
     private Post getPost() {
         Post savePost = new  Post();
         savePost.setId(1);
         savePost.setTitle("title");
-        savePost.setTitle("text");
+        savePost.setAuthorId(1);
+        savePost.setContent("text");
         savePost.setData(LocalDateTime.of(2022, 2, 23, 8, 9, 10));
         savePost.setAuthorId(2);
         return savePost;
     }
-    private Post getPostDto() {
+    private PostDto getPostDto() {
         PostDto savePost = new PostDto();
         savePost.setId(1);
         savePost.setTitle("title");
-        savePost.setTitle("text");
-        savePost.setData(LocalDateTime.of(2022, 2, 23, 8, 9, 10));
-        savePost.setAuthorId(2);
+        savePost.setContent("text");
+        savePost.setAuthorId(1);
         return savePost;
     }
 }

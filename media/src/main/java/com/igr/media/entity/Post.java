@@ -32,7 +32,7 @@ public class Post {
     private LocalDateTime data;
     /**    автор сообщения     */
     @Column(name = "authorId")
-    public int authorId;
+    private int authorId;
     /**    Изображение сообщения     */
     @OneToMany(mappedBy = "images_id")
     @JsonBackReference
