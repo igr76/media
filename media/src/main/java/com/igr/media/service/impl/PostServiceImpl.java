@@ -288,7 +288,7 @@ public class PostServiceImpl implements PostService {
     public Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
-        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions());
+        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions(user.getData()));
     }
 
 
