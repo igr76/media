@@ -42,11 +42,11 @@ public class PostController {
             )
     })
     @GetMapping
-    public ResponseEntity<Collection<PostDto>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<Collection<PostDto>> getAllPosts(Authentication authentication) {
+        return ResponseEntity.ok(postService.getAllPosts( authentication));
     }
 
-    @Operation(summary = "Получить объявление")
+    @Operation(summary = "Получить сообщение по номеру")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -67,7 +67,7 @@ public class PostController {
             Authentication authentication) {
         return ResponseEntity.ok().body(postService.getPostById(id, authentication));
     }
-    @Operation(summary = "Получить все объявления")
+    @Operation(summary = "Получить только свои сообщениe")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -82,7 +82,37 @@ public class PostController {
     public ResponseEntity<Collection<PostDto>> getPostMe(Authentication authentication) {
         return ResponseEntity.ok(postService.getPostMe(authentication));
     }
-    @Operation(summary = "Добавить объявление")
+    @Operation(summary = "Получить новыe  сообщения")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = {
+                            @Content(
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+                    }
+            )
+    })
+    @GetMapping
+    public ResponseEntity<Collection<PostDto>> getAllPostsNew(Authentication authentication) {
+        return ResponseEntity.ok(postService.getAllPostsNew(authentication));
+    }
+    @Operation(summary = "Получить новыe  сообщения по подпискам")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = {
+                            @Content(
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+                    }
+            )
+    })
+    @GetMapping
+    public ResponseEntity<Collection<PostDto>> getAllPostsNewSubscriptions(Authentication authentication) {
+        return ResponseEntity.ok(postService.getAllPostsNewSubscriptions(authentication));
+    }
+    @Operation(summary = "Добавить пост")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "201",
@@ -115,7 +145,7 @@ public class PostController {
             Authentication authentication) throws IOException {
         return ResponseEntity.ok(postService.addPost(greatPostDto, file, authentication));
     }
-    @Operation(summary = "Обновить объявление")
+    @Operation(summary = "Обновить пост")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -146,7 +176,7 @@ public class PostController {
 
         return ResponseEntity.ok().body(postService.updatePost(id, postDto, authentication));
     }
-    @Operation(summary = "Удалить объявление по id")
+    @Operation(summary = "Удалить пост по id")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "204",

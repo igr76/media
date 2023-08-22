@@ -2,12 +2,13 @@ package com.igr.media.dto;
 
 
 
+import com.igr.media.entity.Friends;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
 /**
- * DTO сущности
+ * DTO пользователя
  */
 @Getter
 @Setter
@@ -33,6 +34,10 @@ public class UserDto {
      */
 
     String image;
+    /**     * друзья пользователя     */
+    Collection<Friends> friend;
+    /**     * сообщения друзей пользователя     */
+    Collection<String> message;
 
 
 }

@@ -31,6 +31,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -67,8 +68,9 @@ public class PostServiceImpl implements PostService {
 
 
 
-    public Collection<PostDto> getAllPosts() {
+    public Collection<PostDto> getAllPosts(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
+        changeDataTime(authentication);
         Collection<Post> postCollection = postRepository.findAll();
         return postMapper.toDTOList(postCollection);
     }
@@ -125,6 +127,7 @@ public class PostServiceImpl implements PostService {
         imageRepository.save(imageEntity);
         post.setImageEntities(List.of(imageEntity));
         postRepository.save(post);
+        post.setData(LocalDateTime.now());
         return postDto;
 
     }
@@ -165,6 +168,7 @@ public class PostServiceImpl implements PostService {
         post.setImageEntities(List.of(imageEntity));
 
         imageRepository.save(imageEntity);
+        post.setData(LocalDateTime.now());
     }
 
     /**
@@ -227,6 +231,7 @@ public class PostServiceImpl implements PostService {
         } else throw new SecurityAccessException();
 
     }
+
     /**
      * Получить сообщениe по id
      *
@@ -238,7 +243,7 @@ public class PostServiceImpl implements PostService {
     }
 
     /**
-     * Обновить объявление по id
+     * Обновить сообщениe по id
      *
      * @param id
      */
@@ -261,6 +266,31 @@ public class PostServiceImpl implements PostService {
         return Path.of(nameDir,
                 Objects.requireNonNull(String.valueOf(id)));
     }
+    /**
+     * Обновить дату последнего прочтения сообщениe
+     */
+    private void changeDataTime(Authentication authentication) {
+        UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
+        user.setData(LocalDateTime.now());
+    }
+    /**
+     * Получить  новыe  сообщения
+     */
+    public Collection<PostDto> getAllPostsNew(Authentication authentication) {
+        log.info(FormLogInfo.getInfo());
+        UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
+        Collection<Post> postCollection = postRepository.findAllNew(user.getData());
+        return postMapper.toDTOList(postCollection);
+    }
+    /**
+     * Получить список новых  сообщений по подпискам
+     */
+    public Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication) {
+        log.info(FormLogInfo.getInfo());
+        UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
+        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions());
+    }
+
 
     private String getLinkToGetImage(Integer id) {
         return "/post" + "/" + id;

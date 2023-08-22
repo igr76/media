@@ -13,7 +13,7 @@ import java.util.Collection;
  * Сервис объявлений
  */
 public interface PostService {
-    Collection<PostDto> getAllPosts();
+    Collection<PostDto> getAllPosts(Authentication authentication);
 
     /**
      * Возвращает объявление
@@ -52,6 +52,15 @@ public interface PostService {
     void uploadImage(Integer id, MultipartFile image) throws IOException;
 
     Collection<PostDto> getPostMe(Authentication authentication);
+    /**
+     * Получить список новых  сообщений
+     */
+    Collection<PostDto> getAllPostsNew(Authentication authentication);
+    /**
+     * Получить список новых  сообщений по подпискам
+     */
+    Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication);
+
 
     /**
      * получить аватарку объявления

@@ -2,6 +2,8 @@ package com.igr.media.service;
 
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
+import com.igr.media.entity.Friends;
+import com.igr.media.entity.UserEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,4 +37,14 @@ public interface UserService {
    * получить фото пользователя
    */
   byte[] getPhotoById(Integer id);
+  /** найти пользователя по id */
+  UserDto findById(int id, Authentication authentication);
+  /** отправить сообщение другу */
+  void messageOfFriend(int id,String message);
+  /** Пригласить в друзья */
+  void goFriend(String user, Friends friend);
+  /** добавить в друзья */
+  void addFriend(int userId,String friend);
+/** добавить пользователя в подписку */
+  void addSubscription(String friend, Authentication authentication);
 }

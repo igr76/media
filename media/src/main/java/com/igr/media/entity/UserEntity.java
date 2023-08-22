@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-
+/**     * Сущность пользователя     */
 @Getter
 @Setter
 @ToString
@@ -55,9 +55,19 @@ public class UserEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    /**     * подписки пользователя     */
+    @ElementCollection
+    @CollectionTable(name = "user_subscriptions", joinColumns = @JoinColumn(name = "users_id"))
+    @Column(name = "subscriptions")
+    Collection<Integer> subscriptions;
+    /**     * сообщения друзей пользователя     */
+    @ElementCollection
+    @CollectionTable(name = "user_message", joinColumns = @JoinColumn(name = "users_id"))
+    @Column(name = "message")
+    Collection<String> message;
+    /**     посты пользователя     */
     @OneToMany(mappedBy = "userPost")
     @JsonBackReference
     @ToString.Exclude
-    List<Post> postUser;
+    Collection<Post> postUser;
 }

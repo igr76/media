@@ -3,10 +3,13 @@ package com.igr.media.service.impl;
 
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
+import com.igr.media.entity.Friends;
 import com.igr.media.entity.UserEntity;
 import com.igr.media.exception.ElemNotFound;
+import com.igr.media.exception.SecurityAccessException;
 import com.igr.media.loger.FormLogInfo;
 import com.igr.media.mapper.UserMapper;
+import com.igr.media.repository.FriendsRepository;
 import com.igr.media.repository.UserRepository;
 import com.igr.media.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -32,13 +36,17 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+  private final FriendsRepository friendsRepository;
+  private final SecurityService securityService;
 
   @Value("${image.user.dir.path}")
   private String userPhotoDir;
 
-  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, FriendsRepository friendsRepository, SecurityService securityService) {
     this.userRepository = userRepository;
     this.userMapper = userMapper;
+    this.friendsRepository = friendsRepository;
+    this.securityService = securityService;
   }
 
   /**
@@ -47,9 +55,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto getUser(Authentication authentication) {
     log.info(FormLogInfo.getInfo());
+    if (!securityService.checkAuthorRoleFromAuthentication(authentication)){ new SecurityAccessException();}
     String nameEmail = authentication.getName();
-  //  User user = findEntityByEmail(nameEmail);
-    return null ;//userMapper.toDTO(user);
+    UserEntity userEntity = findEntityByEmail(nameEmail);
+    return userMapper.toDTO(userEntity);
   }
 
   /**
@@ -58,7 +67,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto updateUser(UserDto newUserDto, Authentication authentication) {
     log.info(FormLogInfo.getInfo());
-
+    if (!securityService.checkAuthorRoleFromAuthentication(authentication)
+    ||!securityService.isAuthorAuthenticated(newUserDto.getId(),authentication)){ new SecurityAccessException();}
 //    String nameEmail = authentication.getName();
 //    User user = findEntityByEmail(nameEmail);
 //    int id = user.getId();
@@ -145,6 +155,7 @@ public class UserServiceImpl implements UserService {
    *
    * @return фото конвертированная в массив байтов
    */
+
   public byte[] getPhotoById(Integer id) {
     String linkToGetImage = "user_photo_dir/" + id;
     byte[] bytes;
@@ -163,18 +174,76 @@ public class UserServiceImpl implements UserService {
    * @param id id пользователя
    * @return пользователь
    */
-  private UserEntity findById(int id) {
+  @Override
+  public UserDto findById(int id,Authentication authentication) {
     log.info(FormLogInfo.getInfo());
-    return userRepository.findById(id).orElseThrow(ElemNotFound::new);
+    if (!securityService.checkAuthorRoleFromAuthentication(authentication)){ new SecurityAccessException();}
+    return userMapper.toDTO(userRepository.findById(id).orElseThrow(ElemNotFound::new));
   }
 
+
+  /**
+   * отправить сообщение другу
+   *
+   * @param id  - номер пользователя
+   * @param message  - сообщение другу
+   * @return пользователь
+   */
+  @Override
+  public void messageOfFriend(int id,String message) {
+    UserEntity user = userRepository.findById(id).orElseThrow(ElemNotFound::new);
+    Collection<String> getMessage1 = user.getMessage();
+    getMessage1.add(message);
+    user.setMessage(getMessage1);
+  }
+  /**
+   * Пригласить в друзья
+   *
+   * @param user  -  пользователь
+   * @param friend  -  пользователь друг
+   * @return пользователь
+   */
+  @Override
+  public void goFriend(String user, Friends friend) {
+    messageOfFriend((userRepository.findByEmail(friend.getEmail()).orElseThrow(ElemNotFound::new))
+            .getId(),"Пользователь :" + user + "приглашает вас в друзья.");
+  }
+  /**
+   * добавить в друзья
+   *
+   * @param userId  -  номер пользователь
+   * @param friend  -  пользователь друг
+   * @return пользователь
+   */
+  public void addFriend(int userId,String friend) {
+    UserEntity user = userRepository.findById(userId).orElseThrow(ElemNotFound::new);
+    Friends friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
+    Collection<Friends> friends1 = user.getFriend();
+    friends1.add(friends);
+    user.setFriend(friends1);
+  }
+  /**
+   * добавить пользователя в подписку
+   *
+   * @param  authentication - логину пользователя
+   * @param friend email - логину пользователя
+   * @return пользователь
+   */
+  public void addSubscription(String friend, Authentication authentication) {
+    String nameEmail = authentication.getName();
+    UserEntity userEntity = findEntityByEmail(nameEmail);
+    Friends friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
+    Collection<Integer> subscription = userEntity.getSubscriptions();
+    subscription.add(friends.getId());
+    userEntity.setSubscriptions(subscription);
+  }
   /**
    * найти пользователя по email - логину
    *
    * @param email email - логину пользователя
    * @return пользователь
    */
-  private UserEntity findEntityByEmail(String email) {
+  public UserEntity findEntityByEmail(String email) {
     log.info(FormLogInfo.getInfo());
     return userRepository.findByEmail(email).get();
   }
