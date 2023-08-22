@@ -1,6 +1,7 @@
 package com.igr.media.service;
 
 import com.igr.media.dto.PostDto;
+import com.igr.media.dto.UserDto;
 import com.igr.media.entity.Post;
 import com.igr.media.mapper.PostMapper;
 import com.igr.media.repository.PostRepository;
@@ -11,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springdoc.core.SecurityService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +32,8 @@ public class PostServiceImplTest {
     PostRepository postRepository;
     @Mock
     PostMapper postMapper;
+    @Mock
+    UserService userService;
     int ONE =1;
 @Test
     void getAllPostsTest() {
@@ -42,6 +46,14 @@ public class PostServiceImplTest {
     assertThat(postService.getAllPosts(any())).isEqualTo(postDtoList);
     verify(postRepository,times(ONE)).findAll();
     }
+
+    @Test
+    void addPostTest() throws IOException {
+        when(userService.getUser(any())).thenReturn(getUserDto());
+        when(postRepository.findMaxID()).thenReturn(1);
+        assertThat(postService.addPost(any(),any(),any())).isEqualTo(getPostDto());
+        verify(postRepository,times(ONE)).findAll();
+    }
     private Post getPost() {
         Post savePost = new  Post();
         savePost.setId(1);
@@ -53,11 +65,20 @@ public class PostServiceImplTest {
         return savePost;
     }
     private PostDto getPostDto() {
-        PostDto savePost = new PostDto();
-        savePost.setId(1);
-        savePost.setTitle("title");
-        savePost.setContent("text");
-        savePost.setAuthorId(1);
-        return savePost;
+        PostDto savePostDto = new PostDto();
+        savePostDto.setId(1);
+        savePostDto.setTitle("title");
+        savePostDto.setContent("text");
+        savePostDto.setAuthorId(1);
+        return savePostDto;
     }
+    private UserDto getUserDto() {
+        UserDto userDto = new UserDto();
+        userDto.setId(1);
+        userDto.setName("name");
+        userDto.setEmail("email.ru");
+        userDto.setPassword("111111");
+        return userDto;
+    }
+
 }
