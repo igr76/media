@@ -183,7 +183,7 @@ public class PostServiceImpl implements PostService {
         UserDto userDTO = userService.getUser(authentication);
         Collection<PostDto> postAll = postMapper.toDTOList(postRepository.findAll());
         Collection<PostDto> postMe = postAll.stream().
-                filter(x -> x.getName().equals(userDTO.getId())).collect(Collectors.toList());
+                filter(x -> x.getAuthorId().equals(userDTO.getId())).collect(Collectors.toList());
 
         return postMe;
     }
@@ -288,7 +288,7 @@ public class PostServiceImpl implements PostService {
     public Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
-        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions());
+        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions(user.getData()));
     }
 
 
