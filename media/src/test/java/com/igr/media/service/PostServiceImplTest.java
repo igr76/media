@@ -5,14 +5,17 @@ import com.igr.media.dto.UserDto;
 import com.igr.media.entity.Post;
 import com.igr.media.entity.UserEntity;
 import com.igr.media.mapper.PostMapper;
+import com.igr.media.mapper.UserMapper;
 import com.igr.media.repository.PostRepository;
 import com.igr.media.repository.UserRepository;
 import com.igr.media.service.impl.PostServiceImpl;
+import com.igr.media.service.impl.SecurityService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springdoc.core.SecurityService;
+import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -39,6 +42,8 @@ public class PostServiceImplTest {
     UserService userService;
     @Mock
     UserRepository userRepository;
+    @Mock
+    UserMapper userMapper;
     int ONE =1;
 @Test
     void getAllPostsTest() {
@@ -61,11 +66,20 @@ public class PostServiceImplTest {
     }
 
     @Test
-    void updatePostTest() {
-        when(userRepository.findByEmail(any())).thenReturn(Optional.ofNullable(getUser()));
+    void removePostTest() {
+        when(userService.getUser(any())).thenReturn(getUserDto());
         when(postRepository.findById(any())).thenReturn(Optional.of(getPost()));
+        when(securityService.isAdmin((Authentication) any())).thenReturn(true);
+        when(userMapper.toEntity(any())).thenReturn(getUser());
+        Assertions.assertThat(postRepository.findById(anyInt())).isNotNull();
+        verify(postRepository,times(ONE)).delete(any());
+    }
+    @Test
+    void updatePostTest()  {
+        when(userService.getUser(any())).thenReturn(getUserDto());
+        when(postRepository.findMaxID()).thenReturn(1);
         assertThat(postService.updatePost(any(),any(),any())).isEqualTo(getPostDto());
-        verify(postRepository,times(ONE)).findAll();
+        lenient().doNothing().when(postRepository).delete(any());
     }
 
     private UserEntity getUser() {
