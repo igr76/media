@@ -3,7 +3,7 @@ package com.igr.media.controller;
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.PostDto;
 import com.igr.media.dto.UserDto;
-import com.igr.media.entity.Friends;
+import com.igr.media.entity.Friend;
 import com.igr.media.loger.FormLogInfo;
 import com.igr.media.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -303,7 +303,7 @@ public class UserController {
     public void goFriend(
             @PathVariable(name = "user") @NonNull  String user,
             @RequestBody
-            Friends friends) {
+            Friend friends) {
         userService.goFriend(user,friends);
 
     }

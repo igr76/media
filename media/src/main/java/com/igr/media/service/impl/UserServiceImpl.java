@@ -3,7 +3,7 @@ package com.igr.media.service.impl;
 
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
-import com.igr.media.entity.Friends;
+import com.igr.media.entity.Friend;
 import com.igr.media.entity.UserEntity;
 import com.igr.media.exception.ElemNotFound;
 import com.igr.media.exception.SecurityAccessException;
@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
    * @return пользователь
    */
   @Override
-  public void goFriend(String user, Friends friend) {
+  public void goFriend(String user, Friend friend) {
     messageOfFriend((userRepository.findByEmail(friend.getEmail()).orElseThrow(ElemNotFound::new))
             .getId(),"Пользователь :" + user + "приглашает вас в друзья.");
   }
@@ -217,8 +217,8 @@ public class UserServiceImpl implements UserService {
    */
   public void addFriend(int userId,String friend) {
     UserEntity user = userRepository.findById(userId).orElseThrow(ElemNotFound::new);
-    Friends friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
-    Collection<Friends> friends1 = user.getFriend();
+    Friend friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
+    Collection<Friend> friends1 = user.getFriend();
     friends1.add(friends);
     user.setFriend(friends1);
   }
@@ -232,7 +232,7 @@ public class UserServiceImpl implements UserService {
   public void addSubscription(String friend, Authentication authentication) {
     String nameEmail = authentication.getName();
     UserEntity userEntity = findEntityByEmail(nameEmail);
-    Friends friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
+    Friend friends = friendsRepository.findByName(friend).orElseThrow(ElemNotFound::new);
     Collection<Integer> subscription = userEntity.getSubscriptions();
     subscription.add(friends.getId());
     userEntity.setSubscriptions(subscription);

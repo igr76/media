@@ -24,7 +24,6 @@ public class ImageEntity {
     String path;
 
     @ManyToOne
-    @JsonIgnore
     Post post;
 
 }

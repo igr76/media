@@ -2,6 +2,7 @@ package com.igr.media.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
 /** Друзья сущность     */
@@ -12,7 +13,8 @@ import java.util.Collection;
 @EqualsAndHashCode
 @Entity
 @Table(name = "friends")
-public class Friends {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Friend {
     /** id пользователя     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Friends {
 
     /** Имя пользователя     */
     @Column(name = "name")
-    String Name;
+    String name;
 
     /**     * почта пользователя     */
     @Column(name = "email")
@@ -33,9 +35,9 @@ public class Friends {
             inverseJoinColumns= @JoinColumn(name="users_id", referencedColumnName="id") )
      Collection<UserEntity> user;
 
-    public Friends(Integer id, String name, String email) {
+    public Friend(Integer id, String name, String email) {
         this.id = id;
-        Name = name;
+        name = name;
         this.email = email;
     }
 }
