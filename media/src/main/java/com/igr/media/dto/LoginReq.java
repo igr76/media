@@ -1,10 +1,13 @@
 package com.igr.media.dto;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginReq {
-    private String password;
-    private String username;
+    String password;
+    String username;
 
 }

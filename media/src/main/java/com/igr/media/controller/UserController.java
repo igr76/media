@@ -65,8 +65,7 @@ public class UserController {
   })
   @PostMapping(value = "/setPassword")
   public ResponseEntity<NewPassword> setPassword(
-      @RequestBody
-      @NotBlank(message = "newPassword не должен быть пустым") NewPassword newPassword) {
+      @RequestBody NewPassword newPassword) {
     log.info(FormLogInfo.getInfo());
     NewPassword newPasswordDTO = userService.setPassword(newPassword);
     return ResponseEntity.ok(newPasswordDTO);
@@ -134,7 +133,7 @@ public class UserController {
   @PatchMapping(value = "/me")
   public ResponseEntity<UserDto> updateUser(
       @RequestBody
-      @NotBlank(message = "updateUser не должен быть пустым") UserDto userDto, Authentication authentication) {
+      UserDto userDto, Authentication authentication) {
     log.info(FormLogInfo.getInfo());
     return ResponseEntity.ok(userService.updateUser(userDto, authentication));
   }
@@ -304,7 +303,7 @@ public class UserController {
     public void goFriend(
             @PathVariable(name = "user") @NonNull  String user,
             @RequestBody
-            @NotBlank(message = "updateUser не должен быть пустым") Friends friends) {
+            Friends friends) {
         userService.goFriend(user,friends);
 
     }
