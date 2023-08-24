@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -51,20 +52,20 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf().disable()
+        .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests((authz) ->
         {
           try {
             authz
                     .requestMatchers(AUTH_WHITELIST).permitAll()
-                .requestMatchers(HttpMethod.GET, "/ads").permitAll()
-                .requestMatchers("/ads/**", "/users/**")
+                .requestMatchers(HttpMethod.GET, "/post").permitAll()
+                .requestMatchers("/post/**", "/users/**")
                 .authenticated();
           } catch (Exception e) {
             throw new RuntimeException(e);
           }
         })
-        .cors().and()
+        .cors(withDefaults())
         .httpBasic(withDefaults());
     return http.build();
   }
