@@ -13,6 +13,8 @@ public class PostReading {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      Integer id;
+    @Column(name = "user_id")
+    Integer user_id;
      boolean reading;
     /**    Дата сообщения     */
     @Column(name = "data")

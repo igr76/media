@@ -1,5 +1,6 @@
 package com.igr.media.entity;
 
+import com.igr.media.dto.StatusFriend;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,29 +16,31 @@ import java.util.Collection;
 @Table(name = "friends")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Friend {
-    /** id пользователя     */
+    /**
+     * id пользователя
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     Integer id;
 
-    /** Имя пользователя     */
-    @Column(name = "name")
-    String name;
+    /**
+     * Имя пользователя
+     */
+    @Column(name = "user_id1")
+    String user_id1;
 
-    /**     * почта пользователя     */
-    @Column(name = "email")
-    String email;
+    /**
+     * почта пользователя
+     */
+    @Column(name = "user_id2")
+    String user_id2;
+    /**
+     * почта пользователя
+     */
+    @Column(name = "status")
+    StatusFriend status;
 
-    @ManyToMany
-    @JoinTable(name="users_friends",
-            joinColumns=  @JoinColumn(name="friends_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="users_id", referencedColumnName="id") )
-     Collection<UserEntity> user;
-
-    public Friend(Integer id, String name, String email) {
-        this.id = id;
-        name = name;
-        this.email = email;
-    }
 }
+
+
