@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,23 +17,24 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "posts")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     /**    Идентификатор сообщения     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+     Integer id;
     /**    Заголовок сообщения     */
     @Column(name = "title")
-    public String title;
+     String title;
     /**    Содержание сообщения     */
     @Column(name = "content")
-    private String content;
+     String content;
     /**    Дата сообщения     */
     @Column(name = "data")
-    private LocalDateTime data;
+     LocalDateTime data;
     /**    автор сообщения     */
     @Column(name = "authorId")
-    private int authorId;
+     int authorId;
     /**    Изображение сообщения     */
     @OneToMany(mappedBy = "images_id")
     @JsonBackReference

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.igr.media.dto.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -17,6 +18,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity {
     /** id пользователя     */
     @Id
@@ -37,7 +39,7 @@ public class UserEntity {
     String password;
     /**    Время последнего прочтения     */
     @Column(name = "data")
-    private LocalDateTime data;
+     LocalDateTime data;
     /**
      * фото пользователя
      */
@@ -49,12 +51,12 @@ public class UserEntity {
     @JoinTable(name="users_friends",
             joinColumns=  @JoinColumn(name="users_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="friends_id", referencedColumnName="id") )
-    private  Collection<Friends> friend;
+      Collection<Friend> friend;
 
     /**     * роль пользователя     */
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role;
+     Role role;
     /**     * подписки пользователя     */
     @ElementCollection
     @CollectionTable(name = "user_subscriptions", joinColumns = @JoinColumn(name = "users_id"))

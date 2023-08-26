@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GreatPostDto {
     /**    Заголовок сообщения     */
-    public String title;
+    String title;
     /**    Содержание сообщения     */
-    private String content;
+     String content;
     /**    Дата сообщения     */
-    private LocalDateTime data;
+     LocalDateTime data;
     /**    автор сообщения     */
-    public String name;
+     String name;
 }

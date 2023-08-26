@@ -26,7 +26,7 @@ import java.io.IOException;
 @CrossOrigin(value = "http://localhost:3000")
 public class ImageController {
 
-    private PostService postService;
+    private final PostService postService;
 
     public ImageController(PostService adsService) {
         this.postService = adsService;

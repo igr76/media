@@ -2,7 +2,7 @@ package com.igr.media.service;
 
 import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
-import com.igr.media.entity.Friends;
+import com.igr.media.entity.Friend;
 import com.igr.media.entity.UserEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +42,7 @@ public interface UserService {
   /** отправить сообщение другу */
   void messageOfFriend(int id,String message);
   /** Пригласить в друзья */
-  void goFriend(String user, Friends friend);
+  void goFriend(String user, Friend friend);
   /** добавить в друзья */
   void addFriend(int userId,String friend);
 /** добавить пользователя в подписку */
