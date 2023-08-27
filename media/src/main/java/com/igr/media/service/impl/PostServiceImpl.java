@@ -277,6 +277,7 @@ public class PostServiceImpl implements PostService {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
         Collection<Post> postCollection = postRepository.getAllPostsNew(user.getId());
+        // Внесение прочитанных сообщений, статус прочитанно
         postCollection.stream()
                 .forEach(e -> {PostReading postReading1 = new PostReading();
                     postReading1.setUser_id(user.getId());
@@ -292,6 +293,7 @@ public class PostServiceImpl implements PostService {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
         Collection<Post> postCollection = postRepository.getAllPostsNewSubscriptions(user.getId());
+        // Внесение прочитанных сообщений, статус прочитанно
         postCollection.stream()
                 .forEach(e -> {PostReading postReading1 = new PostReading();
                 postReading1.setUser_id(user.getId());
