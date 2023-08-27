@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+    <changeSet id="1" author="igor_gritsuk">
+        <tagDatabase tag="create_table_users"/>
+    </changeSet>
+    <include file="01-create-table-users.sql" relativeToChangelogFile="true"/>
+
+
+    <changeSet id="2" author="igor_gritsuk">
+        <tagDatabase tag="create_table_post"/>
+    </changeSet>
+    <include file="02-create-table-post.sql" relativeToChangelogFile="true"/>
+
+    <changeSet id="3" author="igor_gritsuk">
+        <tagDatabase tag="create_table_post_image"/>
+    </changeSet>
+    <include file="03-create-table-post-images.sql" relativeToChangelogFile="true"/>
+
+
+    <changeSet id="5" author="igor_gritsuk">
+        <tagDatabase tag="create_table_friends"/>
+    </changeSet>
+    <include file="04-create-table-friends.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
