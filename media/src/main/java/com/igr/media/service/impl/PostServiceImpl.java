@@ -6,6 +6,7 @@ import com.igr.media.dto.PostDto;
 import com.igr.media.dto.UserDto;
 import com.igr.media.entity.ImageEntity;
 import com.igr.media.entity.Post;
+import com.igr.media.entity.PostReading;
 import com.igr.media.entity.UserEntity;
 import com.igr.media.exception.ElemNotFound;
 import com.igr.media.exception.SecurityAccessException;
@@ -14,6 +15,7 @@ import com.igr.media.mapper.ImageMapper;
 import com.igr.media.mapper.PostMapper;
 import com.igr.media.mapper.UserMapper;
 import com.igr.media.repository.ImageRepository;
+import com.igr.media.repository.PostReadingRepository;
 import com.igr.media.repository.PostRepository;
 import com.igr.media.repository.UserRepository;
 import com.igr.media.service.PostService;
@@ -51,6 +53,8 @@ public class PostServiceImpl implements PostService {
     private ImageRepository imageRepository;
     private UserMapper userMapper;
     private SecurityService securityService;
+    private PostReading postReading;
+    private PostReadingRepository postReadingRepository;
     @Value("${image.ads.dir.path}")
     private String imagePostDir;
 
@@ -70,7 +74,6 @@ public class PostServiceImpl implements PostService {
 
     public Collection<PostDto> getAllPosts(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
-        changeDataTime(authentication);
         Collection<Post> postCollection = postRepository.findAll();
         return postMapper.toDTOList(postCollection);
     }
@@ -273,7 +276,13 @@ public class PostServiceImpl implements PostService {
     public Collection<PostDto> getAllPostsNew(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
-        Collection<Post> postCollection = postRepository.findAllNew(user.getData());
+        Collection<Post> postCollection = postRepository.getAllPostsNew(user.getId());
+        postCollection.stream()
+                .forEach(e -> {PostReading postReading1 = new PostReading();
+                    postReading1.setUser_id(user.getId());
+                    postReading1.setPost_id(e.getId());
+                    postReading1.setReading(true);
+                    postReadingRepository.save(postReading1);});
         return postMapper.toDTOList(postCollection);
     }
     /**
@@ -282,7 +291,14 @@ public class PostServiceImpl implements PostService {
     public Collection<PostDto> getAllPostsNewSubscriptions(Authentication authentication) {
         log.info(FormLogInfo.getInfo());
         UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
-        return postMapper.toDTOList(postRepository.getAllPostsNewSubscriptions(user.getData()));
+        Collection<Post> postCollection = postRepository.getAllPostsNewSubscriptions(user.getId());
+        postCollection.stream()
+                .forEach(e -> {PostReading postReading1 = new PostReading();
+                postReading1.setUser_id(user.getId());
+                postReading1.setPost_id(e.getId());
+                postReading1.setReading(true);
+                postReadingRepository.save(postReading1);});
+        return postMapper.toDTOList(postCollection);
     }
 
 
