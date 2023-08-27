@@ -23,6 +23,10 @@ public interface UserService {
   UserDto updateUser(UserDto userDto, Authentication authentication) ;
 
   /**
+   * удалить пользователя
+   */
+  void deleteUser(UserDto userDto, Authentication authentication) ;
+  /**
    * установить новый пароль пользователя
    */
   NewPassword setPassword(NewPassword newPassword);
@@ -42,9 +46,9 @@ public interface UserService {
   /** отправить сообщение другу */
   void messageOfFriend(int id,String message);
   /** Пригласить в друзья */
-  void goFriend(String user, Friend friend);
+  void goFriend(String user, String friend);
   /** добавить в друзья */
-  void addFriend(int userId,String friend);
+  void addFriend(int userId,String nameFriends);
 /** добавить пользователя в подписку */
   void addSubscription(String friend, Authentication authentication);
 }

@@ -266,15 +266,9 @@ public class PostServiceImpl implements PostService {
         return Path.of(nameDir,
                 Objects.requireNonNull(String.valueOf(id)));
     }
+
     /**
-     * Обновить дату последнего прочтения сообщениe
-     */
-    private void changeDataTime(Authentication authentication) {
-        UserEntity user = userRepository.findByName(authentication.getName()).orElseThrow(ElemNotFound::new);
-        user.setData(LocalDateTime.now());
-    }
-    /**
-     * Получить  новыe  сообщения
+     * Получить  непрочитанные  сообщения
      */
     public Collection<PostDto> getAllPostsNew(Authentication authentication) {
         log.info(FormLogInfo.getInfo());

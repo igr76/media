@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 /**    Сущность сообщения     */
 @Getter
@@ -35,6 +36,10 @@ public class Post {
     /**    автор сообщения     */
     @Column(name = "authorId")
      int authorId;
+    /**     * Статус прочтения сообщений     */
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    Collection<PostReading> postReading;
     /**    Изображение сообщения     */
     @OneToMany(mappedBy = "images_id")
     @JsonBackReference
