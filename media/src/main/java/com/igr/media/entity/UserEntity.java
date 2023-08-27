@@ -47,21 +47,19 @@ public class UserEntity {
     String image;
 
     /**     * друзья пользователя     */
-    @ManyToMany
-    @JoinTable(name="users_friends",
-            joinColumns=  @JoinColumn(name="users_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="friends_id", referencedColumnName="id") )
+    @OneToMany
+    @JoinColumn(name = "user1")
       Collection<Friend> friend;
 
     /**     * роль пользователя     */
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
      Role role;
-    /**     * подписки пользователя     */
-    @ElementCollection
-    @CollectionTable(name = "user_subscriptions", joinColumns = @JoinColumn(name = "users_id"))
-    @Column(name = "subscriptions")
-    Collection<Integer> subscriptions;
+    /**     * Статус прочтения сообщений     */
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    Collection<PostReading> postReading;
+
     /**     * сообщения друзей пользователя     */
     @ElementCollection
     @CollectionTable(name = "user_message", joinColumns = @JoinColumn(name = "users_id"))

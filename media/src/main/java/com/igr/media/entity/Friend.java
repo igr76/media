@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
-/** Друзья сущность     */
+/** Друзья, подписчики сущность     */
 @Getter
 @Setter
 @ToString
@@ -25,16 +25,16 @@ public class Friend {
     Integer id;
 
     /**
-     * Имя пользователя
+     * Номер пользователя
      */
     @Column(name = "user_id1")
-    String user_id1;
+    int user1;
 
     /**
-     * почта пользователя
+     *Номер другв
      */
     @Column(name = "user_id2")
-    String user_id2;
+    int user2;
     /**
      * почта пользователя
      */

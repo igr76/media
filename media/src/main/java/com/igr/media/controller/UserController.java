@@ -303,8 +303,8 @@ public class UserController {
     public void goFriend(
             @PathVariable(name = "user") @NonNull  String user,
             @RequestBody
-            Friend friends) {
-        userService.goFriend(user,friends);
+            String nameFriends) {
+        userService.goFriend(user,nameFriends);
 
     }
 

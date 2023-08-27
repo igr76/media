@@ -50,6 +50,9 @@ public interface PostService {
      * @param image
      */
     void uploadImage(Integer id, MultipartFile image) throws IOException;
+    /**
+     * Получить список своих  сообщений
+     */
 
     Collection<PostDto> getPostMe(Authentication authentication);
     /**
