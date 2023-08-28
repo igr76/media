@@ -84,7 +84,7 @@ public class PostController {
                     }
             )
     })
-    @GetMapping
+    @GetMapping("/me")
     public ResponseEntity<Collection<PostDto>> getPostMe(Authentication authentication) {
         return ResponseEntity.ok(postService.getPostMe(authentication));
     }
@@ -99,7 +99,7 @@ public class PostController {
                     }
             )
     })
-    @GetMapping
+    @GetMapping("/allNew")
     public ResponseEntity<Collection<PostDto>> getAllPostsNew(Authentication authentication) {
         return ResponseEntity.ok(postService.getAllPostsNew(authentication));
     }
@@ -114,7 +114,7 @@ public class PostController {
                     }
             )
     })
-    @GetMapping
+    @GetMapping("newSubscriptions")
     public ResponseEntity<Collection<PostDto>> getAllPostsNewSubscriptions(Authentication authentication) {
         return ResponseEntity.ok(postService.getAllPostsNewSubscriptions(authentication));
     }

@@ -19,7 +19,7 @@ public class NewPassword {
    * id пароля
    */
   @JsonIgnore
-  private Long id;
+   Long id;
   /**
    * текущий пароль
    */

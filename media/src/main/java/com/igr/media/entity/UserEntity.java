@@ -56,8 +56,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
      Role role;
     /**     * Статус прочтения сообщений     */
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "userId")
     Collection<PostReading> postReading;
 
     /**     * сообщения друзей пользователя     */
@@ -67,7 +66,6 @@ public class UserEntity {
     Collection<String> message;
     /**     посты пользователя     */
     @OneToMany(mappedBy = "userPost")
-    @JsonBackReference
     @ToString.Exclude
     Collection<Post> postUser;
 }

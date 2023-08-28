@@ -22,7 +22,7 @@ public class UserDto {
         Integer id;
 
     /** Имя пользователя     */
-    String Name;
+    String name;
 
     /**     * почта пользователя     */
     String email;

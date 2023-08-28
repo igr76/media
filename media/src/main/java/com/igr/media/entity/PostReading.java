@@ -21,11 +21,13 @@ public class PostReading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      Integer id;
     /**    Номер читателя     */
-    @Column(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "users_id",nullable = false)
+    Integer userId;
     /**    номер сообщения     */
-    Integer user_id;
-    @Column(name = "post_id")
-    Integer post_id;
+    @ManyToOne
+    @JoinColumn(name = "posts_id",nullable = false)
+    Integer postId;
     /**    Статус прочтения сообщения     */
      boolean reading;
 

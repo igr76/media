@@ -2,7 +2,7 @@ package com.igr.media.controller;
 
 import com.igr.media.dto.LoginReq;
 import com.igr.media.dto.RegisterReq;
-import com.igr.media.security.UserDetailServiceImpl;
+import com.igr.media.security.UserDetailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,15 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 @Slf4j
-@CrossOrigin(value = "http://localhost:3000")
 @Tag(name = "Авторизация")
 @RestController
 public class AuthController {
 
-    private final UserDetailServiceImpl userDetailService;
+    private final UserDetailService userDetailService;
 
     public AuthController(
-        @Qualifier("UserDetailServiceImpl") UserDetailServiceImpl userDetailService) {
+        @Qualifier("UserDetailService") UserDetailService userDetailService) {
         this.userDetailService = userDetailService;
     }
     @Operation(summary = "Авторизация на сайте")
