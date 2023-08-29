@@ -23,11 +23,11 @@ public class PostReading {
     /**    Номер читателя     */
     @ManyToOne
     @JoinColumn(name = "users_id",nullable = false)
-    Integer userId;
+    UserEntity userId;
     /**    номер сообщения     */
     @ManyToOne
     @JoinColumn(name = "posts_id",nullable = false)
-    Integer postId;
+    Post postId;
     /**    Статус прочтения сообщения     */
      boolean reading;
 

@@ -47,8 +47,7 @@ public class UserEntity {
     String image;
 
     /**     * друзья пользователя     */
-    @OneToMany
-    @JoinColumn(name = "user1")
+    @OneToMany(mappedBy = "user1")
       Collection<Friend> friend;
 
     /**     * роль пользователя     */
@@ -62,7 +61,6 @@ public class UserEntity {
     /**     * сообщения друзей пользователя     */
     @ElementCollection
     @CollectionTable(name = "user_message", joinColumns = @JoinColumn(name = "users_id"))
-    @Column(name = "message")
     Collection<String> message;
     /**     посты пользователя     */
     @OneToMany(mappedBy = "userPost")
