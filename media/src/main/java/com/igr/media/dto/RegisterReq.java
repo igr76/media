@@ -9,6 +9,6 @@ import lombok.experimental.FieldDefaults;
 public class RegisterReq {
      String username;
      String password;
-     String Name;
+     String name;
      Role role;
 }

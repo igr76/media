@@ -24,6 +24,7 @@ public class ImageEntity {
     String path;
 
     @ManyToOne
-    Post post;
+    @JoinColumn(name = "posts_id")
+    Post postIdImage;
 
 }

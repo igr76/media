@@ -20,11 +20,11 @@ import java.util.List;
 
 @Service("UserDetailServiceImpl")
 @Slf4j
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailService implements UserDetailsService {
 
   private final UserRepository userRepository;
 
-  public UserDetailServiceImpl(UserRepository userRepository) {
+  public UserDetailService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
