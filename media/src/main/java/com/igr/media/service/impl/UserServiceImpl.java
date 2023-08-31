@@ -14,6 +14,7 @@ import com.igr.media.repository.FriendsRepository;
 import com.igr.media.repository.PostReadingRepository;
 import com.igr.media.repository.UserRepository;
 import com.igr.media.service.UserService;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -53,6 +55,9 @@ public class UserServiceImpl implements UserService {
     this.postReadingRepository = postReadingRepository;
   }
 
+  public UserEntity getByLogin(@NonNull String login) {
+    return userRepository.findByName(login).orElseThrow(ElemNotFound::new);
+  }
   /**
    * Получить данные пользователя
    */
