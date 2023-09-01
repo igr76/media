@@ -4,6 +4,7 @@ import com.igr.media.dto.NewPassword;
 import com.igr.media.dto.UserDto;
 import com.igr.media.entity.Friend;
 import com.igr.media.entity.UserEntity;
+import lombok.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * сервис пользователя
  */
 public interface UserService {
+  public UserEntity getByLogin(@NonNull String login);
 
   /**
    * получить пользователя
