@@ -1,6 +1,7 @@
 package com.igr.media.jwt;
 
 
+import com.igr.media.entity.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -34,27 +35,27 @@ public class JwtProvider {
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
     }
 
-    public String generateAccessToken(@NonNull CustomUserDetails user) {
+    public String generateAccessToken(@NonNull UserEntity user) {
 
         final LocalDateTime now = LocalDateTime.now();
         final Instant accessExpirationInstant = now.plusMinutes(lifetimeForAccessTokenInMinutes).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(user.getUserId()))
+                .setSubject(String.valueOf(user.getName()))
                 .setExpiration(accessExpiration)
                 .signWith(jwtAccessSecret)
                 .compact();
     }
 
-    public String generateRefreshToken(@NonNull CustomUserDetails user) {
+    public String generateRefreshToken(@NonNull UserEntity user) {
 
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(lifetimeForRefreshTokenInDays).atZone(ZoneId.systemDefault()).toInstant();
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(user.getUserId()))
+                .setSubject(String.valueOf(user.getName()))
                 .setExpiration(refreshExpiration)
                 .signWith(jwtRefreshSecret)
                 .compact();
