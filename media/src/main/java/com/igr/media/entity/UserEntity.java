@@ -37,9 +37,7 @@ public class UserEntity {
     /**     * пароль пользователя     */
     @Column(name = "password")
     String password;
-    /**    Время последнего прочтения     */
-    @Column(name = "data")
-     LocalDateTime data;
+
     /**
      * фото пользователя
      */
