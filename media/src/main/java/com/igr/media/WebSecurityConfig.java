@@ -1,20 +1,32 @@
 package com.igr.media;
 
+import com.igr.media.jwt.JwtFilter;
 import com.igr.media.utils.Encoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+
+  private final JwtFilter jwtFilter;
 
 
   private static final String[] AUTH_WHITELIST = {
@@ -28,10 +40,10 @@ public class WebSecurityConfig {
   };
   private final UserDetailsService userDetailService;
 
-  public WebSecurityConfig(
-      @Qualifier("UserDetailServiceImpl") UserDetailsService userDetailService) {
-    this.userDetailService = userDetailService;
-  }
+//  public WebSecurityConfig(
+//      @Qualifier("UserDetailServiceImpl") UserDetailsService userDetailService) {
+//    this.userDetailService = userDetailService;
+//  }
 
   @Bean
   protected DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -60,11 +72,12 @@ public class WebSecurityConfig {
                     .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers(HttpMethod.GET, "/post").permitAll()
                 .requestMatchers("/post/**", "/users/**")
-                .authenticated();
+                    .authenticated();
           } catch (Exception e) {
             throw new RuntimeException(e);
           }
         })
+            .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .cors(withDefaults())
         .httpBasic(withDefaults());
     return http.build();

@@ -1,5 +1,6 @@
 package com.igr.media.jwt;
 
+import com.igr.media.dto.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,9 @@ import java.util.Collection;
 public class JwtAuthentication implements Authentication {
 
     private boolean authenticated;
-    private String userId;
+    private String userName;
+    private String email;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -31,7 +34,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return new JwtUser(userId); // Возвращаем объект с userId;
+        return userName; // Возвращаем объект с userId;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return userId;
+        return email;
     }
 
 }
