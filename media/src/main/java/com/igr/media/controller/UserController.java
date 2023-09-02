@@ -239,10 +239,10 @@ public class UserController {
                     description = "Not Found"
             )
     })
-    @PatchMapping("/message/{id}/{message}")
+    @PatchMapping("/message/{id}")
     public void messageOfFriend(
             @PathVariable(name = "id") @NonNull @Parameter(description = "Больше 0, Например 1") Integer id,
-            @PathVariable(name = "message") @NonNull String message) {
+            @RequestBody @NonNull String message) {
       userService.messageOfFriend(id,message);
 
     }
@@ -269,10 +269,10 @@ public class UserController {
                     description = "Not Found"
             )
     })
-    @PatchMapping("/friend/{id}/{friend}")
+    @PatchMapping("/friend/{id}")
     public void addFriend(
             @PathVariable(name = "id") @NonNull @Parameter(description = "Больше 0, Например 1") Integer id,
-            @PathVariable(name = "friend") @NonNull String friend) {
+            @RequestBody String friend) {
         userService.addFriend(id,friend);
 
     }

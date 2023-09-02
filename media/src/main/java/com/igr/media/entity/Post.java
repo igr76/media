@@ -37,17 +37,14 @@ public class Post {
     @Column(name = "authorId")
      int authorId;
     /**     * Статус прочтения сообщений     */
-    @OneToMany
-    @JoinColumn(name = "post_id")
+    @OneToMany(mappedBy = "postId")
     Collection<PostReading> postReading;
     /**    Изображение сообщения     */
-    @OneToMany(mappedBy = "images_id")
-    @JsonBackReference
+    @OneToMany(mappedBy = "postIdImage")
     @ToString.Exclude
     List<ImageEntity> imageEntities;
-
+    /**    Автор  сообщения     */
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "userPost")
+    @JoinColumn(name = "users_id")
     UserEntity userPost;
 }
