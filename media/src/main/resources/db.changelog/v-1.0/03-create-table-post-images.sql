@@ -7,4 +7,3 @@ CREATE TABLE post_images
     on delete cascade
 );
 
-ALTER TABLE ads DROP COLUMN image;
