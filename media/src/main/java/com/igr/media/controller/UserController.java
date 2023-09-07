@@ -40,28 +40,12 @@ public class UserController {
 
   @Operation(summary = "Установить новый пароль")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content =
+      @ApiResponse(responseCode = "200", description = "OK", content =
           @Content(
-              array = @ArraySchema(schema = @Schema(implementation = NewPassword.class)))
-      ),
-      @ApiResponse(
-          responseCode = "401",
-          description = "Unauthorized",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "403",
-          description = "Forbidden",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found",
-          content = @Content(schema = @Schema())
-      )
+              array = @ArraySchema(schema = @Schema(implementation = NewPassword.class)))),
+      @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema()))
   })
   @PostMapping(value = "/setPassword")
   public ResponseEntity<NewPassword> setPassword(
@@ -73,27 +57,15 @@ public class UserController {
 
   @Operation(summary = "Получить пользователя")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
+      @ApiResponse(responseCode = "200", description = "OK",
           content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
-      ),
-      @ApiResponse(
-          responseCode = "401",
-          description = "Unauthorized",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "403",
-          description = "Forbidden",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found",
-          content = @Content(schema = @Schema())
-      )
+              array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))),
+      @ApiResponse(responseCode = "401", description = "Unauthorized",
+          content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "403", description = "Forbidden",
+          content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "404", description = "Not Found",
+          content = @Content(schema = @Schema()))
   })
   @GetMapping(value = "/me")
   public ResponseEntity<UserDto> getUser(Authentication authentication) {
@@ -103,32 +75,17 @@ public class UserController {
 
   @Operation(summary = "Обновить пользователя")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
+      @ApiResponse(responseCode = "200", description = "OK",
           content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
-      ),
-      @ApiResponse(
-          responseCode = "204",
-          description = "No Content",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "401",
-          description = "Unauthorized",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "403",
-          description = "Forbidden",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found",
-          content = @Content(schema = @Schema())
-      )
+              array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))),
+      @ApiResponse(responseCode = "204", description = "No Content",
+          content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "401", description = "Unauthorized",
+          content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "403", description = "Forbidden",
+          content = @Content(schema = @Schema())),
+      @ApiResponse(responseCode = "404", description = "Not Found",
+          content = @Content(schema = @Schema()))
   })
   @PatchMapping(value = "/me")
   public ResponseEntity<UserDto> updateUser(
@@ -140,17 +97,10 @@ public class UserController {
 
   @Operation(summary = "Обновить изображение пользователя")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema())
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found",
-          content = @Content(schema = @Schema())
-      )
+      @ApiResponse(responseCode = "200", description = "OK",
+          content = @Content(array = @ArraySchema())),
+      @ApiResponse(responseCode = "404", description = "Not Found",
+          content = @Content(schema = @Schema()))
   })
   @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<?> updateUserImage(@RequestParam MultipartFile image,
@@ -163,22 +113,10 @@ public class UserController {
 
   @Operation(summary = "Получить аватарку юзера")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK"
-      ),
-      @ApiResponse(
-          responseCode = "401",
-          description = "Unauthorized"
-      ),
-      @ApiResponse(
-          responseCode = "403",
-          description = "Forbidden"
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found"
-      )
+      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "404", description = "Not Found")
   })
   @GetMapping(value = "{id}", produces = MediaType.IMAGE_PNG_VALUE)
   public ResponseEntity<byte[]> getUserImage(@PathVariable(value = "id") Integer id) {
@@ -187,27 +125,11 @@ public class UserController {
   }
     @Operation(summary = "Получить пользователя")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = @Content(
-                            array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = @Content(schema = @Schema())
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = @Content(schema = @Schema())
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = @Content(schema = @Schema())
-            )
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema()))
     })
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<UserDto> findById(
@@ -218,26 +140,12 @@ public class UserController {
     }
     @Operation(summary = "отправить сообщение другу")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(
-                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
-            )
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
     })
     @PatchMapping("/message/{id}")
     public void messageOfFriend(
@@ -248,26 +156,12 @@ public class UserController {
     }
     @Operation(summary = "добавить в друзья")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(
-                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
-            )
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
     })
     @PatchMapping("/friend/{id}")
     public void addFriend(
@@ -278,26 +172,12 @@ public class UserController {
     }
     @Operation(summary = "Пригласить в друзья")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(
-                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
-            )
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
     })
     @PatchMapping("/friend/{user}")
     public void goFriend(

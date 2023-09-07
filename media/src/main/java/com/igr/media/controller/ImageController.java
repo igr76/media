@@ -36,17 +36,13 @@ public class ImageController {
     @Operation(summary = "Загрузить картинку в пост")
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+                    responseCode = "200",description = "OK",content = {
                             @Content(
                                     mediaType = "application/octet-stream",
                                     array = @ArraySchema(schema = @Schema(implementation = ImageDTO.class)))
                     }
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
+            @ApiResponse(responseCode = "404", description = "Not Found"
             )
     })
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -58,22 +54,10 @@ public class ImageController {
 
   @Operation(summary = "Получить аватарку поста")
   @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK"
-      ),
-      @ApiResponse(
-          responseCode = "401",
-          description = "Unauthorized"
-      ),
-      @ApiResponse(
-          responseCode = "403",
-          description = "Forbidden"
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Not Found"
-      )
+      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "404", description = "Not Found")
   })
   @GetMapping(value = "{id}", produces = MediaType.IMAGE_PNG_VALUE)
   public ResponseEntity<byte[]> getPhotoById(@PathVariable(value = "id") Integer id) {

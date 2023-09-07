@@ -90,14 +90,8 @@ public class PostController {
     }
     @Operation(summary = "Получить новыe  сообщения")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
-                            @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            )
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                            @Content(array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))})
     })
     @GetMapping("/allNew")
     public ResponseEntity<Collection<PostDto>> getAllPostsNew(Authentication authentication) {
@@ -105,14 +99,9 @@ public class PostController {
     }
     @Operation(summary = "Получить новыe  сообщения по подпискам")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            )
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))})
     })
     @GetMapping("newSubscriptions")
     public ResponseEntity<Collection<PostDto>> getAllPostsNewSubscriptions(Authentication authentication) {
@@ -120,29 +109,15 @@ public class PostController {
     }
     @Operation(summary = "Добавить пост")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "201", description = "OK", content = {
                             @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized",
-                    content = {@Content(array = @ArraySchema(schema = @Schema()))}
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden",
-                    content = {@Content(array = @ArraySchema(schema = @Schema()))}
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found",
-                    content = {@Content(array = @ArraySchema(schema = @Schema()))}
-            )
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(array = @ArraySchema(schema = @Schema()))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(array = @ArraySchema(schema = @Schema()))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(array = @ArraySchema(schema = @Schema()))})
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostDto> addPost(
@@ -153,26 +128,12 @@ public class PostController {
     }
     @Operation(summary = "Обновить пост")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
-                    content = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
                             @Content(
-                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
-            )
+                                    schema = @Schema(ref = "#/components/schemas/AdsDTO"))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
     })
     @PatchMapping("{id}")
     public ResponseEntity<?> updatePost(
@@ -184,18 +145,9 @@ public class PostController {
     }
     @Operation(summary = "Удалить пост по id")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "204",
-                    description = "No Content"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden"
-            )
+            @ApiResponse(responseCode = "204", description = "No Content"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden")
     })
     @DeleteMapping(value = "/{id}")
     public void removePost(@PathVariable(name = "id")
