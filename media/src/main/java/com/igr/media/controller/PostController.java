@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.Collection;
 @RequestMapping("/post")
 @Slf4j
-@CrossOrigin(value = "http://localhost:3000")
 @Tag(name = "Сообщения")
 @RestController
 public class PostController {
@@ -38,14 +37,9 @@ public class PostController {
 
     @Operation(summary = "Получить все объявления")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
+            @ApiResponse(responseCode = "200", description = "OK",
                     content = {
-                            @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            )
+                            @Content(array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))})
     })
     @GetMapping
     public ResponseEntity<Collection<PostDto>> getAllPosts(Authentication authentication) {
@@ -54,18 +48,11 @@ public class PostController {
 
     @Operation(summary = "Получить сообщение по номеру")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
+            @ApiResponse(responseCode = "200", description = "OK",
                     content = {
                             @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not Found"
-            )
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))}),
+            @ApiResponse(responseCode = "404", description = "Not Found")
     })
     @GetMapping("{id}")
     public ResponseEntity<?> getPostById(
@@ -75,14 +62,10 @@ public class PostController {
     }
     @Operation(summary = "Получить только свои сообщениe")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK",
+            @ApiResponse(responseCode = "200", description = "OK",
                     content = {
                             @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-                    }
-            )
+                                    array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))})
     })
     @GetMapping("/me")
     public ResponseEntity<Collection<PostDto>> getPostMe(Authentication authentication) {

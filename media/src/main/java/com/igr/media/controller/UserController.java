@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/users")
 @Slf4j
-@CrossOrigin(value = "http://localhost:3000")
 @Tag(name = "Пользователи")
 @RestController
 public class UserController {
