@@ -23,7 +23,6 @@ import java.io.IOException;
 @RequestMapping("/post")
 @Tag(name = "Изображение")
 @Slf4j
-@CrossOrigin(value = "http://localhost:3000")
 public class ImageController {
 
     private final PostService postService;
