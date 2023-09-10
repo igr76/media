@@ -125,7 +125,7 @@ public class PostServiceImpl implements PostService {
         ImageDTO imageDTO = new ImageDTO();
         imageDTO.setImage(linkToGetImage);
         ImageEntity imageEntity = imageMapper.toEntity(imageDTO);
-        imageEntity.setPost(post);
+        imageEntity.setPostIdImage(post);
         imageEntity.setPath(linkToGetImage);
         imageRepository.save(imageEntity);
         post.setImageEntities(List.of(imageEntity));
@@ -166,7 +166,7 @@ public class PostServiceImpl implements PostService {
             bis.transferTo(bos);
         }
         ImageEntity imageEntity = new ImageEntity();
-        imageEntity.setPost(post);
+        imageEntity.setPostIdImage(post);
         imageEntity.setPath(linkToGetImage);
         post.setImageEntities(List.of(imageEntity));
 
@@ -280,8 +280,8 @@ public class PostServiceImpl implements PostService {
         // Внесение прочитанных сообщений, статус прочитанно
         postCollection.stream()
                 .forEach(e -> {PostReading postReading1 = new PostReading();
-                    postReading1.setUser_id(user.getId());
-                    postReading1.setPost_id(e.getId());
+                    postReading1.setUserId(user);
+                    postReading1.setPostId(e);
                     postReading1.setReading(true);
                     postReadingRepository.save(postReading1);});
         return postMapper.toDTOList(postCollection);
@@ -296,8 +296,8 @@ public class PostServiceImpl implements PostService {
         // Внесение прочитанных сообщений, статус прочитанно
         postCollection.stream()
                 .forEach(e -> {PostReading postReading1 = new PostReading();
-                postReading1.setUser_id(user.getId());
-                postReading1.setPost_id(e.getId());
+                postReading1.setUserId(user);
+                postReading1.setPostId(e);
                 postReading1.setReading(true);
                 postReadingRepository.save(postReading1);});
         return postMapper.toDTOList(postCollection);
