@@ -25,16 +25,10 @@ public class SecurityService {
     public boolean checkAuthor(int id, UserEntity user) {
         return id == user.getId();
     }
-    /** Проверка автора объявления на электронную почту */
+    /** Проверка автора сообщения на электронную почту */
     public boolean checkAuthor(int id, String email) {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(ElemNotFound::new);
         return checkAuthor(id, user);
-    }
-    /** Проверка авторства объявления по Authentication */
-    public boolean checkAuthorEmailAndAdsId(int id, Authentication authentication) {
-        UserEntity user = userRepository.findByEmail(authentication.getName()).orElseThrow(ElemNotFound::new);
-        Post adEntity = postRepository.findById(id).orElseThrow(ElemNotFound::new);
-        return true; //user.getId()==adEntity.getAuthor().getId();
     }
     /** Проверка роли администратора по Authentication */
     public boolean checkAuthorRoleFromAuthentication(Authentication authentication) {
@@ -51,22 +45,9 @@ public class SecurityService {
         return isAuthorAuthenticated(user.getEmail(), authentication);
     }
 
-    public boolean isAuthorAuthenticated(UserEntity user, Authentication authentication) {
-        return isAuthorAuthenticated(user.getEmail(), authentication);
-    }
     /** Проверка пользователя на роль администратора */
     public boolean isAdmin(UserEntity user) {
         return user.getRole().equals(Role.ADMIN);
-    }
-
-    public boolean isAdmin(int id) {
-        UserEntity user = userRepository.findById(id).orElseThrow(ElemNotFound::new);
-        return isAdmin(user);
-    }
-
-    public boolean isAdmin(String email) {
-        UserEntity user = userRepository.findByEmail(email).orElseThrow(ElemNotFound::new);
-        return isAdmin(user);
     }
 
     public boolean isAdmin(Authentication authentication) {
@@ -86,7 +67,7 @@ public class SecurityService {
         return false;
     }
 
-    /** Проверка законности доступа к методам объявлений */
+    /** Проверка законности доступа к методам сообщений */
     public boolean isAdsUpdateAvailable(Authentication authentication, int AuthorId) {
         if (isUpdateAvailable(authentication)) {
             return true;
